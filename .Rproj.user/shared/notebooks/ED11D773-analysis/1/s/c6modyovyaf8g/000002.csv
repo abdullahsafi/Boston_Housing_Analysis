@@ -1,0 +1,4 @@
+"0","autoplot(tax_medv_lm, which = 1:2) + theme_bw()"
+"2","Error in autoplot(tax_medv_lm, which = 1:2) : 
+  object 'tax_medv_lm' not found
+"

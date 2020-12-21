@@ -1,0 +1,180 @@
+---
+title: "final"
+author: '480440172|470500790'
+date: "27/10/2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message = FALSE)
+library("tidyverse")
+library("janitor")
+library("readxl")
+library("openxlsx")
+library("plyr")
+library('knitr')
+library('kableExtra')
+library("emmeans")
+library(ggfortify)
+```
+
+```{r}
+data<-read_csv("https://raw.githubusercontent.com/DATA2002/data/master/boston.csv",na="NA")
+data<-as.data.frame(data)
+data("data", package = "MASS")
+dim(data)
+glimpse(data)
+data$RAD
+```
+
+**Analysis**
+We are investigating the effect on Medium value of owner-occupied homes in $1000's
+
+
+# Step One:
+Do variables in the dataset effect Medium value of owner-occupied homes in $1000's?
+perform mutliple regression with a full model
+```{r}
+data = data[,-c(4)]
+boston_data_medv_lm = lm(log(MEDV) ~ ., data)
+summary(boston_data_medv_lm)
+```
+
+# Step 2
+Perform selection using the AIC starting from the full model.
+We can rid of insigificant explanatory variables
+
+```{r}
+medv_lm_step = step(boston_data_medv_lm)
+summary(medv_lm_step)
+```
+
+```{r}
+medv_lm_step
+```
+
+
+$\widehat{MEDV} = 4.094 - 0.101\times\text{CRIM} + 0.001\times\text{ZN} - 0.687\times\text{NOX} + 0.092\times\text{RM} - 0.053\times\text{DIS} + 0.014\times\text{RAD} - 0.001\times\text{TAX} - 0.039\times\text{PTRATIO} + 0.001\times\text{B} -  0.029\times\text{LSTAT}$
+
+Looks good
+# Step 4 check assumptions
+
+```{r}
+autoplot(medv_lm_step, which = 1:2) + theme_bw()
+```
+
+- Linearity: there’s no obvious pattern in the residual vs fitted values plot (e.g. no smiley face of frowny face) so it doesn’t appear that we have misspecified the model
+
+
+- Homoskedasticity: the residuals don’t appear to be fanning out or changing their variability over the range of the fitted values so the constant error variance assumption is met.
+
+- Normality: in the QQ plot, the points are reasonably close to the diagonal line. The bottom 7 or so points are not quite on the line, but it’s not severe enough departure to cause too much concern. The normality assumption is at least approximately satisfied.
+
+
+What proportion of the variability of ozone is explained by the explanatory variables in the step-wise selected model?
+
+
+```{r}
+summary(medv_lm_step)
+```
+
+Looking at the R2 value (multiple R-squared) from the summary output, ~74% of the variability is explained by the regression on the variables listed above.
+
+
+
+# Inference tests
+
+## Check effect of Tax on medv
+
+```{r}
+dis_medv_lm = lm(MEDV ~ DIS, data)
+summary(dis_medv_lm)
+```
+```{r}
+autoplot(tax_medv_lm, which = 1:2) + theme_bw()
+```
+
+```{r}
+p1 = ggplot(data = data, aes(x = TAX,
+                          y = MEDV)) + 
+  geom_point() + 
+  theme_bw(base_size = 20) + 
+  labs(x = "TAX",
+       y = "MEDV\n(occupied homes in $1000's)") +
+  geom_smooth(method = "lm", se = FALSE)
+p1
+```
+
+There is not much correlation.
+
+## Check effect of Weighted distances to five Boston employment centres on medv
+
+```{r}
+dis_medv_lm = lm(MEDV ~ DIS, data)
+summary(dis_medv_lm)$coefficients
+
+environmental = data %>% 
+  mutate(l_mev = log(MEDV))
+lm2 = lm(l_mev ~ DIS, data = environmental)
+summary(lm2)
+autoplot(lm2, which = 1:2) + theme_bw()
+```
+
+```{r}
+autoplot(dis_medv_lm, which = 1:2) + theme_bw()
+```
+##Summary ##
+In the residual vs fitted values plot, there is no obvious pattern in the spread of the residuals across the range of fitted values. It looks like the homoskedasticity assumption is satisfied as the points are roughly equally spread over the range of fitted values.
+And in the QQ plot, the points are reasonably close to the diagonal line. The top serveral points are not quite on the line, but it’s not severe enough departure to cause too much concern. The normality assumption is at least approximately satisfied.
+```{r}
+p1 = ggplot(data = data, aes(x = DIS,
+                          y = log(MEDV))) + 
+  geom_point() + 
+  theme_bw() + 
+  labs(x = "DIS",
+       y = "MEDV\n(occupied homes in $1000's)") +
+  geom_smooth(method = "lm", se = FALSE)
+p1
+```
+
+
+## Check effect of Weighted distances to five Boston employment centres on medv
+
+```{r}
+crim_medv_lm = lm(MEDV ~ NOX, data)
+summary(crim_medv_lm)$coefficients
+
+environmental = data %>% 
+  mutate(l_mev = log(MEDV))
+lm2 = lm(l_mev ~ NOX, data = environmental)
+```
+```{r}
+summary(lm2)
+autoplot(lm2, which = 1:2) + theme_bw()
+```
+p1 = ggplot(data = data, aes(x = NOX,
+                          y = log(MEDV))) + 
+  geom_point() + 
+  theme_bw() + 
+  labs(x = "NOX",
+       y = "MEDV") +
+  geom_smooth(method = "lm", se = FALSE)
+p1
+```
+
+
+```{r}
+environmental = data %>% 
+  mutate(l_mev = log(MEDV))
+lm2 = lm(l_mev ~ ., data = environmental)
+summary(lm2)
+
+medv_lm_step = step(lm2)
+summary(medv_lm_step)
+```
+```{r}
+autoplot(medv_lm_step, which = 1:2) + theme_bw()
+```
+

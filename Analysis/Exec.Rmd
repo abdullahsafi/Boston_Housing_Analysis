@@ -1,0 +1,42 @@
+---
+title: "Executive summary"
+author: "480440172 | 490175477 | 480561916 | 480550367 | 470500790"
+date: "The University of Sydney | DATA2002 Group M13-07"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float:
+      collapsed: false
+    number_section: true
+    theme: flatly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("tidyverse")
+library("janitor")
+library("readxl")
+library("openxlsx")
+library("plyr")
+library('knitr')
+library('kableExtra')
+```
+
+
+# Astract:
+A one paragraph summary of what you set out to learn, and what you ended up finding. It should summarise the entire report.
+
+# Introduction:
+A discussion of what questions you are trying to answer.
+
+# Data set:
+Describe details about how the data set was collected (if known) and the variables in the data set.
+
+# Analysis:
+Describe how you used multiple regression to analyse the data set. Specifically, you should discuss how you carried out the steps in analysis discussed in class, i.e., exploration of data to find an initial reasonable model (variable selection), checking the model and any changes to the model based on your checking of the model (e.g. transformations).
+
+# Results: Provide inferences about any questions of interest that you identify and interpretation of parameter estimates where needed. Discuss the performance of your selected model.
+
+# Discussion and conclusion: 
+Describe any limitations of your analysis and how they might be overcome in future research and provide brief conclusions about the results of your study.

@@ -1,0 +1,212 @@
+---
+title: "Executive summary"
+author: "480440172 | 490175477 |480561916|470500790"
+date: "The University of Sydney | DATA2002 Group M13-07"
+output:  
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float:
+      collapsed: false
+    number_section: true
+    theme: flatly
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message = FALSE)
+library("tidyverse")
+library("janitor")
+library("readxl")
+library("openxlsx")
+library("plyr")
+library('knitr')
+library('kableExtra')
+library("emmeans")
+```
+
+```{r}
+data<-read_csv("https://raw.githubusercontent.com/DATA2002/data/master/boston.csv",na="NA")
+data<-as.data.frame(data)
+
+glimpse(data)
+```
+
+## first slide 
+ title 
+
+## second slide 
+
+**Data description**
+
+#data set
+-Collected by the U.S. census concerning housing in Boston, Massachusetts.
+
+-Contains 506 cases and was originally published in 1978.
+
+#introduction
+-The aim for our report is to determine which factors significantly affect the housing prices.
+
+-In this report we consider two factors that is the per capita crime rate by town and Nitric oxides concentration (PP10M).
+
+#Abstract
+
+-Data set we were assigned was originally titled “Hedonic prices and the demand for clean air”.
+
+-This suggests that the prices of houses would be higher in areas with clean air so nitric oxide concentrations will be considered.
+
+
+## third slide 
+# data set 
+This dataset has 14 variables; 
+
+1) CRIM: the per capita crime rate by town.
+
+2) ZN: the proportion of residential land zoned for lots over 25,000 sq.ft.
+
+3) INDUS: the proportion of non-retail business acres  per town 
+
+4) CHAS: Charles River dummy variable( 1 if tract bounds river; 0 otherwise)
+
+5) NOX: Nitric oxides concentration (PP10M)
+
+6) RM: Average number of rooms per dwelling
+
+7) AGE: Proportion of owner-occupied units built prior to 1940
+
+8) DIS: Weighted distances to five Boston employment centres
+
+9) RAD: Index of accessibility of radial highways
+
+10) TAX: Full value property tax rate per $10,000
+
+11) PTRATIO: Pupil- teacher ratio by town
+
+12) B: 1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town
+
+13) LSTAT: % lower status of the population
+
+14) MEDV: Medium value of owner-occupied homes in $1000's.
+ 
+
+## fourth slide 
+
+**Analysis**
+```{r}
+library(GGally)
+glimpse(data)  # glimpse the structure of the boston data
+pairs(data)  # traditional pairs plot
+GGally::ggpairs(data)  # ggplotified pairs plot
+boxplot(data)  # always a good idea to check for gross outliers
+boxplot(scale(data))  # always a good idea to check for gross outliers
+```
+
+#step 1 perform a miltiple regression of MEDV on the other variable 
+```{r}
+boston_data_lm = lm(MEDV ~ ., data)
+summary(boston_data_lm)
+```
+
+Hypothesis:$H_0$:  = $β = 0 $
+
+$H_1$:  $β  \neq 0 $ 
+Assumptions:
+
+
+```{r}
+library(ggfortify)
+#Drop AGE AND INDUS
+boston_data_lm = lm(MEDV ~ CRIM + ZN + CHAS + NOX + RM + DIS + RAD + TAX + PTRATIO + B + LSTAT, data)
+summary(boston_data_lm)
+
+
+autoplot(boston_data_lm, which = 1:2) + theme_bw()
+```
+
+
+Test statistic:
+Observed test statistics:
+P-value:
+Conclusion:
+
+# Step 2  Perform selection using the AIC starting from the full model.
+
+```{r}
+boston_step = step(boston_data_lm)
+
+```
+
+```{r}
+boston_step
+```
+#Step 3  Write down the fitted model for the model selected by the step-wise procedure.
+
+MEDV= 36.341 - 0.108×CRIM + 0.046×ZN 
++ 2.719×CHAS - 17.376×NOX + 3.802×RM 
+- 1.493×DIS + 0.300×RAD - 0.012×TAX –
+ 0.947×PTRATIO + 0.009×B - 0.523×LSTAT
+
+
+
+#Step 4  Check the linear regression assumptions
+
+```{r}
+library(ggfortify)
+autoplot(boston_step, which = 1:2) + theme_bw()
+```
+
+
+#Step 5 What proportion of the variability of MEDV is explained by the explanatory variables in the step-wise selected model.
+
+```{r}
+summary(boston_step)
+```
+Looking at the multiple R-squared from the summary output, 74.6% of the variability of MEDV is explained by the regression on CRIM,ZN,CHNS,NOX,RM,DIS,RAD,TAX,PTRATIO,B,LSTAT.
+
+
+Relationship between Nitric Oxide Level and Housing Price
+```{r}
+library(ggfortify)
+NO_HP = lm(MEDV ~ NOX , data)
+summary(NO_HP)
+
+
+autoplot(NO_HP, which = 1:2) + theme_bw()
+```
+
+
+
+Relationship between the per capita crime rate by town  and Housing Price
+```{r}
+library(ggfortify)
+CC_HP = lm(MEDV ~ CRIM , data)
+summary(CC_HP)
+
+autoplot(CC_HP, which = 1:2) + theme_bw()
+```
+#Relationship between the full-value property-tax rate by average number of rooms per dwelling#
+```{r}
+p1 = ggplot(data, aes(x = RM,
+                          y =TAX)) + 
+  geom_point(size = 3) + 
+  theme_classic(base_size = 20) + 
+  labs(x = "average number of rooms per dwelling",
+       y = "TAX\n(tax rate per $10,000)") +
+  geom_smooth(method = "lm", se = FALSE)
+p1
+RM_TAX = lm(RM ~ TAX , data)
+summary(RM_TAX)
+
+autoplot(RM_TAX, which = 1:2) + theme_bw()
+```
+In the residual vs fitted values plot, there is no obvious pattern in the spread of the residuals across the range of fitted values. It looks like the homoskedasticity assumption is satisfied as the points are roughly equally spread over the range of fitted values.
+
+In the normal QQ plot, the points are all quite close to the diagonal line, suggesting that the normality assumption is comfortably satisfied.
+
+
+
+
+**Result**
+
+
+**Discussion **

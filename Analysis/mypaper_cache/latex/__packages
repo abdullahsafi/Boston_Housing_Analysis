@@ -1,0 +1,14 @@
+base
+rmarkdown
+ggplot2
+tidyverse
+tibble
+tidyr
+readr
+purrr
+dplyr
+stringr
+forcats
+plyr
+knitr
+png

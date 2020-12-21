@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Data Presentation Group M13-07</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="480440172 | 490175477 |480561916| 480550367" />
+    <link href="power_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets\sydney-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="assets\sydney.css" type="text/css" />
+    <link rel="stylesheet" href="extra.css" type="text/css" />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Data Presentation Group M13-07
+### 480440172 | 490175477 |480561916| 480550367
+### The University of Sydney | DATA2002 Group M13-07
+
+---
+
+background-image: url(power_point.jpg)
+background-size: 100% 100%
+.pull-middle[
+# .center[&lt;span style="     color: white !important;" &gt;Data Description&lt;/span&gt;]
+
+
+
+&lt;span style="     color: white !important;" &gt;This dataset contains information collected by the U.S Census Service concerning housing in the area of Boston Mass&lt;/span&gt;
+
+
+&lt;span style="     color: white !important;" &gt;Contains 506 cases and was originally published in 1978.&lt;/span&gt;
+
+
+&lt;span style="     color: white !important;" &gt;The aim of our report is to determine which factors significantly affect the housing prices.&lt;/span&gt;
+
+
+&lt;span style="     color: white !important;" &gt;In this report, we consider two factors ,which is the full-value property-tax rate per $10,000 and weighted distances to five Boston employment centres&lt;/span&gt;
+]
+
+
+---
+background-image: url(power_point.jpg)
+background-size: 100% 100%
+
+
+# .center[&lt;span style="     color: white !important;" &gt;Data Variables&lt;/span&gt;]
+&lt;font size="4",font color = "white"&gt;This dataset has 14 variables;&lt;/font&gt;&lt;br/&gt;
+
+.pull-left[
+
+&lt;font size="3",font color = "white"&gt;1) CRIM: the per capita crime rate by town.&lt;/font&gt;&lt;br /&gt;
+
+&lt;font size="3",font color = "white"&gt;2) ZN: the proportion of residential land zoned for lots over 25,000 sq.ft.&lt;/font&gt;&lt;br /&gt;
+
+&lt;font size="3",font color = "white"&gt;3) INDUS: the proportion of non-retail business acres  per town&lt;/font&gt;&lt;br /&gt;
+
+&lt;font size="3",font color = "white"&gt;4) CHAS: Charles River dummy variable( 1 if tract bounds river; 0 otherwise)&lt;/font&gt;&lt;br /&gt;
+
+&lt;font size="3",font color = "white"&gt;5) NOX: Nitric oxides concentration (PP10M)&lt;/font&gt;&lt;br /&gt;
+
+&lt;font size="3",font color = "white"&gt;6) RM: Average number of rooms per dwelling&lt;/font&gt;&lt;br /&gt;
+
+&lt;font size="3",font color = "white"&gt;7) AGE: Proportion of owner-occupied units built prior to 1940&lt;/font&gt;&lt;br /&gt;
+
+]
+
+.pull-right[
+
+&lt;font size="3",font color = "white"&gt;8) DIS: Weighted distances to five Boston employment centres&lt;/font&gt;&lt;br /&gt;
+
+&lt;font size="3",font color = "white"&gt;9) RAD: Index of accessibility of radial highways&lt;/font&gt;&lt;br /&gt;
+
+&lt;font size="3",font color = "white"&gt;10) TAX: Full value property tax rate per $10,000&lt;/font&gt;&lt;br /&gt;
+
+&lt;font size="3",font color = "white"&gt;11) PTRATIO: Pupil- teacher ratio by town&lt;/font&gt;&lt;br /&gt;
+
+&lt;font size="3",font color = "white"&gt;12) B: 1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town&lt;/font&gt;&lt;br /&gt;
+
+&lt;font size="3",font color = "white"&gt;13) LSTAT: % lower status of the population&lt;/font&gt;&lt;br /&gt;
+
+&lt;font size="3",font color = "white"&gt;14) MEDV: Medium value of owner-occupied homes in $1000's&lt;/font&gt;&lt;br /&gt;
+]
+
+---
+background-image: url(power_point.jpg)
+background-size: 100% 100%
+# .center[&lt;span style="     color: white !important;" &gt;What did we investigate?&lt;/span&gt;]
+
+---
+background-image: url(template2.png)
+background-size: 100% 100%
+&lt;span style=" font-weight: bold;    color: white !important;font-size: 24px;" &gt;Do variables in the data set affect the Medium value of owner-occupied homes (in $1000s)?&lt;/span&gt;
+
+.pull-left[
+&lt;font color = "white"&gt;1.We perform mutliple regression with a full model
+]
+
+.pull-right[![centre-aligned image](full_model.PNG)]
+
+
+---
+background-image: url(template2.png)
+background-size: 100% 100%
+&lt;span style=" font-weight: bold;    color: white !important;font-size: 24px;" &gt;Do variables in the data set affect the Medium value of owner-occupied homes (in $1000s)?&lt;/span&gt;
+
+.pull-left[
+&lt;font color = "white"&gt; 2.To drop insignificant variables, we use the AIC starting from the full model
+.right[![Left-aligned image](dropped_model.PNG)]
+]
+
+.pull-right[
+&lt;font color = "white"&gt; 3.Write down the fitted model selected in the step-wise procedure
+
+
+`\(\widehat{MEDV} = 36.341 - 0.108\times\text{CRIM} + 0.045\times\text{ZN}\)`
+
+
+
+
+`\(+ 2.718\times\text{CHAS} - 17.376\times\text{NOX} + 3.801\times\text{RM}\)`
+
+
+
+`\(- 1.492\times\text{DIS} - 0.0118\times\text{TAX} - 0.012\times\text{PTRATIO}\)`
+
+
+
+`\(+ 0.009\times\text{B} -  0.522\times\text{LSTAT}\)`
+]
+
+---
+background-image: url(template2_empty.png)
+background-size: 100% 100%
+.pull-left[
+&lt;font color = "white"&gt; 4.We check our linear model assumptions
+
+.right[![Left-aligned image](assumptions.PNG)]
+&lt;font color = "white"&gt; - Linearity
+&lt;font color = "white"&gt; - Homoskedasticity
+&lt;font color = "white"&gt; - Normality
+]
+
+.pull-right[
+&lt;font color = "white"&gt; 5.What proportion of the variability of MEDV is explained by the explanatory variables in the step-wise selected model?
+
+.right[![Right-aligned image](explained.PNG)]
+
+&lt;font color = "white"&gt; Looking at the R2 value (multiple R-squared) from the summary output, ~74% of the variability is explained by the regression on the variables
+]
+
+---
+background-image: url(template.png)
+background-size: 100% 100%
+# .center[&lt;span style="     color: white !important;" &gt;Inference&lt;/span&gt;]
+
+.center[&lt;span style="     color: white !important;" &gt;Testing for the significance of the slope parameter ß1&lt;/span&gt;]
+
+---
+background-image: url(template_empty.png)
+background-size: 100% 100%
+&lt;font color = "white"&gt; Weighted distances to five Boston employment centres vs House pricing
+.pull-left[
+.right[![Left-aligned image](inference_dis.PNG)]
+&lt;font color = "white"&gt; - Linearity
+&lt;font color = "white"&gt; - Homoskedasticity
+&lt;font color = "white"&gt; - Normality
+]
+
+.pull-right[
+.right[![Right-aligned image](inference_dis_graph.PNG)]
+&lt;font color = "white"&gt;Inference: 
+&lt;font color = "white"&gt; `\(H_0\colon\ \beta_1 = 0\)` vs `\(H_1\colon\ \beta_1 \neq 0\)`
+&lt;font color = "white"&gt; `\(t_0 = \dfrac{1.0916}{0.1884} = 5.79\)`
+&lt;font color = "white"&gt; `\(2P(t_{504 }\ge 5.79) &lt; 0.0001 (1.206612e-08)\)`
+]
+
+---
+background-image: url(template_empty.png)
+background-size: 100% 100%
+&lt;font color = "white"&gt; The per capita crime rate by town vs House Pricing
+
+.pull-left[
+.right[![Left-aligned image](inference_crim.PNG)]
+
+&lt;font color = "white"&gt; - Linearity
+&lt;font color = "white"&gt; - Homoskedasticity
+&lt;font color = "white"&gt; - Normality
+]
+
+.pull-right[
+.right[![Right-aligned image](inference_crim_graph.PNG)]
+&lt;font color = "white"&gt;Inference:
+&lt;font color = "white"&gt; `\(H_0\colon\ \beta_1 = 0\)` vs `\(H_1\colon\ \beta_1 \neq 0\)`
+&lt;font color = "white"&gt; `\(t_0 = \dfrac{-0.41519}{0.043890} = -9.4597\)`
+&lt;font color = "white"&gt; `\(2P(t_{109}\ge -9.4597) &lt; 0.0001 (1.173987e-19)\)`
+
+]
+
+---
+background-image: url(template.png)
+background-size: 100% 100%
+# .center[&lt;span style="     color: white !important;" &gt;Conclusion&lt;/span&gt;]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="assets/remark-zoom.js"></script>
+<script src="https://platform.twitter.com/widgets.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

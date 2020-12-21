@@ -1,0 +1,200 @@
+---
+title: "Data Presentation Group M13-07"
+author: "480440172 | 490175477 |480561916| 480550367"
+date: "The University of Sydney | DATA2002 Group M13-07"
+output:
+  xaringan::moon_reader:
+    css: ["default", "assets/sydney-fonts.css", "assets/sydney.css", "extra.css", "styles.css"]
+    self_contained: false # if true, fonts will be stored locally
+    seal: true # show a title slide with YAML information
+    nature:
+      beforeInit: ["assets/remark-zoom.js", "https://platform.twitter.com/widgets.js"]
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9' # alternatives '16:9' or '4:3' or others e.g. 13:9
+      navigation:
+        scroll: false # disable slide transitions by scrolling
+---
+background-image: url(power_point.jpg)
+background-size: 100% 100%
+.pull-middle[
+# .center[`r kableExtra::text_spec("Data Description", color = "white")`]
+
+
+
+`r kableExtra::text_spec("This dataset contains information collected by the U.S Census Service concerning housing in the area of Boston Mass", color = "white")`
+
+
+`r kableExtra::text_spec("Contains 506 cases and was originally published in 1978.", color = "white")`
+
+
+`r kableExtra::text_spec("The aim of our report is to determine which factors significantly affect the housing prices.", color = "white")`
+
+
+`r kableExtra::text_spec("In this report, we consider two factors ,which is the full-value property-tax rate per $10,000 and weighted distances to five Boston employment centres", color = "white")`
+]
+
+
+---
+background-image: url(power_point.jpg)
+background-size: 100% 100%
+
+
+# .center[`r kableExtra::text_spec("Data Variables", color = "white")`]
+<font size="4",font color = "white">This dataset has 14 variables;</font><br/>
+
+.pull-left[
+
+<font size="3",font color = "white">1) CRIM: the per capita crime rate by town.</font><br />
+
+<font size="3",font color = "white">2) ZN: the proportion of residential land zoned for lots over 25,000 sq.ft.</font><br />
+
+<font size="3",font color = "white">3) INDUS: the proportion of non-retail business acres  per town</font><br />
+
+<font size="3",font color = "white">4) CHAS: Charles River dummy variable( 1 if tract bounds river; 0 otherwise)</font><br />
+
+<font size="3",font color = "white">5) NOX: Nitric oxides concentration (PP10M)</font><br />
+
+<font size="3",font color = "white">6) RM: Average number of rooms per dwelling</font><br />
+
+<font size="3",font color = "white">7) AGE: Proportion of owner-occupied units built prior to 1940</font><br />
+
+]
+
+.pull-right[
+
+<font size="3",font color = "white">8) DIS: Weighted distances to five Boston employment centres</font><br />
+
+<font size="3",font color = "white">9) RAD: Index of accessibility of radial highways</font><br />
+
+<font size="3",font color = "white">10) TAX: Full value property tax rate per $10,000</font><br />
+
+<font size="3",font color = "white">11) PTRATIO: Pupil- teacher ratio by town</font><br />
+
+<font size="3",font color = "white">12) B: 1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town</font><br />
+
+<font size="3",font color = "white">13) LSTAT: % lower status of the population</font><br />
+
+<font size="3",font color = "white">14) MEDV: Medium value of owner-occupied homes in $1000's</font><br />
+]
+
+---
+background-image: url(power_point.jpg)
+background-size: 100% 100%
+# .center[`r kableExtra::text_spec("What did we investigate?", color = "white")`]
+
+---
+background-image: url(template2.png)
+background-size: 100% 100%
+`r kableExtra::text_spec("Do variables in the data set affect the Medium value of owner-occupied homes (in $1000s)?", color = "white", font_size = 24, bold = TRUE)`
+
+.pull-left[
+<font color = "white">1.We perform mutliple regression with a full model
+]
+
+.pull-right[![centre-aligned image](full_model.PNG)]
+
+
+---
+background-image: url(template2.png)
+background-size: 100% 100%
+`r kableExtra::text_spec("Do variables in the data set affect the Medium value of owner-occupied homes (in $1000s)?", color = "white", font_size = 24, bold = TRUE)`
+
+.pull-left[
+<font color = "white"> 2.To drop insignificant variables, we use the AIC starting from the full model
+.right[![Left-aligned image](dropped_model.PNG)]
+]
+
+.pull-right[
+<font color = "white"> 3.Write down the fitted model selected in the step-wise procedure
+
+
+$\widehat{MEDV} = 36.341 - 0.108\times\text{CRIM} + 0.045\times\text{ZN}$
+
+
+
+
+$+ 2.718\times\text{CHAS} - 17.376\times\text{NOX} + 3.801\times\text{RM}$
+
+
+
+$- 1.492\times\text{DIS} - 0.0118\times\text{TAX} - 0.012\times\text{PTRATIO}$
+
+
+
+$+ 0.009\times\text{B} -  0.522\times\text{LSTAT}$
+]
+
+---
+background-image: url(template2_empty.png)
+background-size: 100% 100%
+.pull-left[
+<font color = "white"> 4.We check our linear model assumptions
+
+.right[![Left-aligned image](assumptions.PNG)]
+<font color = "white"> - Linearity
+<font color = "white"> - Homoskedasticity
+<font color = "white"> - Normality
+]
+
+.pull-right[
+<font color = "white"> 5.What proportion of the variability of MEDV is explained by the explanatory variables in the step-wise selected model?
+
+.right[![Right-aligned image](explained.PNG)]
+
+<font color = "white"> Looking at the R2 value (multiple R-squared) from the summary output, ~74% of the variability is explained by the regression on the variables
+]
+
+---
+background-image: url(template.png)
+background-size: 100% 100%
+# .center[`r kableExtra::text_spec("Inference", color = "white")`]
+
+.center[`r kableExtra::text_spec("Testing for the significance of the slope parameter β1", color = "white")`]
+
+---
+background-image: url(template_empty.png)
+background-size: 100% 100%
+<font color = "white"> Weighted distances to five Boston employment centres vs House pricing
+.pull-left[
+.right[![Left-aligned image](inference_dis.PNG)]
+<font color = "white"> - Linearity
+<font color = "white"> - Homoskedasticity
+<font color = "white"> - Normality
+]
+
+.pull-right[
+.right[![Right-aligned image](inference_dis_graph.PNG)]
+<font color = "white">Inference: 
+<font color = "white"> $H_0\colon\ \beta_1 = 0$ vs $H_1\colon\ \beta_1 \neq 0$
+<font color = "white"> $t_0 = \dfrac{1.0916}{0.1884} = 5.79$
+<font color = "white"> $2P(t_{504 }\ge 5.79) < 0.0001 (1.206612e-08)$
+]
+
+---
+background-image: url(template_empty.png)
+background-size: 100% 100%
+<font color = "white"> The per capita crime rate by town vs House Pricing
+
+.pull-left[
+.right[![Left-aligned image](inference_crim.PNG)]
+
+<font color = "white"> - Linearity
+<font color = "white"> - Homoskedasticity
+<font color = "white"> - Normality
+]
+
+.pull-right[
+.right[![Right-aligned image](inference_crim_graph.PNG)]
+<font color = "white">Inference:
+<font color = "white"> $H_0\colon\ \beta_1 = 0$ vs $H_1\colon\ \beta_1 \neq 0$
+<font color = "white"> $t_0 = \dfrac{-0.41519}{0.043890} = -9.4597$
+<font color = "white"> $2P(t_{109}\ge -9.4597) < 0.0001 (1.173987e-19)$
+
+]
+
+---
+background-image: url(template.png)
+background-size: 100% 100%
+# .center[`r kableExtra::text_spec("Conclusion", color = "white")`]

@@ -1,0 +1,1 @@
+{"frames":[{"func":"autoplot(tax_medv_lm, which = 1:2)","file":"","line_number":0,"end_line_number":0,"character_number":0,"end_character_number":0}],"message":"Error in autoplot(tax_medv_lm, which = 1:2) : \n  object 'tax_medv_lm' not found\n"}

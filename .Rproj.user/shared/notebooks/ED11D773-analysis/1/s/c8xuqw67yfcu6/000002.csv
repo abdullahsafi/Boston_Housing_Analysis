@@ -1,0 +1,1 @@
+"0","autoplot(medv_lm_step, which = 1:2) + theme_bw()"
