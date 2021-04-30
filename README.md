@@ -1,4 +1,4 @@
-# Boston_Housing_Dataset_Analysis
+# Boston Housing Analysis
 Using multiple regression to analyse a [Boston House data](https://www.cs.toronto.edu/~delve/data/boston/bostonDetail.html) set with multiple predictor variables.
 This dataset contains information collected by the U.S Census Service concerning housing in the area of Boston Mass.
 Contains 506 cases and was originally published in 1978.
